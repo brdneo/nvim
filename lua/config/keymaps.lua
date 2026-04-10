@@ -152,26 +152,11 @@ vim.api.nvim_set_keymap('n', '<leader>bd', '<cmd>bdelete<CR>', { noremap = true,
 vim.api.nvim_set_keymap('n', '<leader>bo', '<Cmd>BufferLineCloseOthers<CR>', { noremap = true, silent = true }) -- Close other buffers
 
 --code formatting
--- Keymap for formatting code using LSP
 vim.keymap.set("n", "<C-f>", function()
-    vim.lsp.buf.format({
-        async = true,
-        -- You can specify filters here to choose certain LSP servers for formatting, like:
-        -- filter = function(client) return client.name == "tsserver" end
-    })
+    local file = vim.fn.expand('%:p')
+    vim.fn.system('ruff format ' .. file)
+    vim.cmd('edit!')
 end, { desc = "Format Code" })
-
--- Keymap to format only the selected code in visual mode
-vim.keymap.set("v", "<C-f>", function()
-    vim.lsp.buf.format({
-        async = true,
-        range = {
-            ["start"] = vim.api.nvim_buf_get_mark(0, "<"),
-            ["end"] = vim.api.nvim_buf_get_mark(0, ">"),
-        }
-    })
-end, { desc = "Format Selected Code" })
-
 -- -- Keymaps for switching windows
 vim.api.nvim_set_keymap('n', '<C-h>', '<C-w>h', { desc = "left window", noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-l>', '<C-w>l', { desc = "right window", noremap = true, silent = true })
@@ -236,3 +221,4 @@ vim.keymap.set('n', '<leader>s.', tb.oldfiles,                  { desc = 'Search
 vim.keymap.set('n', '<leader>sb', tb.buffers,                   { desc = 'Search Buffers' })
 vim.keymap.set('n', '<leader>sh', tb.help_tags,                 { desc = 'Search Help' })
 vim.keymap.set('n', '<leader>sk', tb.keymaps,                   { desc = 'Search Keymaps' })
+vim.api.nvim_create_autocmd('TermOpen', { pattern = '*', command = 'startinsert' })

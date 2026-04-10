@@ -13,7 +13,7 @@ return {
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
             require("mason-lspconfig").setup({
-                ensure_installed = { "lua_ls", "pyright", "ts_ls" }, -- Add more LSP servers you need
+                ensure_installed = { "lua_ls", "pyright", "ts_ls", "ruff" }, -- Add more LSP servers you need
             })
 
             vim.lsp.config('lua_ls', {
@@ -63,6 +63,15 @@ return {
                             useLibraryCodeForTypes = true,
                             typeCheckingMode = "basic",
                         },
+                    },
+                },
+            })
+            --- Ruff (formatter)
+            vim.lsp.config('ruff', {
+                capabilities = capabilities,
+                init_options = {
+                    settings = {
+                        lineLength = 88,
                     },
                 },
             })
