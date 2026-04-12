@@ -58,7 +58,6 @@ return {
                 settings = {
                     python = {
                         analysis = {
-                            pythonPath = "/usr/bin/python3",
                             autoSearchPaths = true,
                             useLibraryCodeForTypes = true,
                             typeCheckingMode = "basic",

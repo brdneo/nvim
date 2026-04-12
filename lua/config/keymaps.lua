@@ -208,7 +208,12 @@ vim.keymap.set('n', '<Down>', '<Down>zz', {noremap = false, silent = true, desc 
 vim.keymap.set('n', '<Up>', '<Up>zz', {noremap = false, silent = true, desc = "center cursor"})
 
 -- Roda arquivo Python atual em split horizontal
-vim.keymap.set('n', '<leader>py', ':w<CR>:split | term python3 %<CR>', { desc = 'Python run' })
+vim.keymap.set('n', '<leader>py', function()
+    local venv = vim.fn.getcwd() .. '/.venv/bin/python'
+    local python = vim.fn.filereadable(venv) == 1 and venv or 'python3'
+    vim.cmd('w')
+    vim.cmd('split | term ' .. python .. ' ' .. vim.fn.expand('%'))
+end, { desc = 'Python run' })
 
 -- Telescope adicional
 local tb = require('telescope.builtin')
