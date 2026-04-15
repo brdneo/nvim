@@ -153,10 +153,8 @@ vim.api.nvim_set_keymap('n', '<leader>bo', '<Cmd>BufferLineCloseOthers<CR>', { n
 
 --code formatting
 vim.keymap.set("n", "<C-f>", function()
-    local file = vim.fn.expand('%:p')
-    vim.fn.system('ruff format ' .. file)
-    vim.cmd('edit!')
-end, { desc = "Format Code" })
+    vim.lsp.buf.format({ async = true })
+end, { desc = "Format Code (LSP)", noremap = true, silent = true })
 -- -- Keymaps for switching windows
 vim.api.nvim_set_keymap('n', '<C-h>', '<C-w>h', { desc = "left window", noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-l>', '<C-w>l', { desc = "right window", noremap = true, silent = true })
